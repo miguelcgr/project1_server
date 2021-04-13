@@ -12,13 +12,18 @@ exports.isNotLoggedIn = (req, res, next) => {
   else next( createError(403) );   // new Error({message: '', statusCode: 403})
 };
 
-exports.validationLogin = (req, res, next) => {
-  const { username, password } = req.body;
+exports.validateAuthData = (req, res, next) => {                                      // EN EL BOILERPLATE PONIA VALIDATIONLOGIN EN LUGAR DE VALIDATEAUTHDATA
+  const { email, password } = req.body;
 
-  if (!username || !password){
+  if (!email || !password){
     next(createError(400));
   } 
   else next();
+};
+
+exports.isAdmin = (req, res, next) => {
+  if (req.session.currentUser.role === "seller") next();
+  else next(createError(401));
 };
 
 
@@ -27,5 +32,5 @@ exports.validationLogin = (req, res, next) => {
 // exports = {
 //   isLoggedIn,
 //   isNotLoggedIn,
-//   validationLogin,
+//   validateAuthData,
 // }

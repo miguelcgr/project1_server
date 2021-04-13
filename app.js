@@ -11,7 +11,8 @@ require("dotenv").config();
 
 const authRouter = require("./routes/auth.router");
 const usersRouter = require("./routes/users.router");
-const projectsRouter = require("./routes/projects.router");
+const productsRouter = require("./routes/products.router");
+const brandsRouter = require("./routes/brands.router");
 
 // MONGOOSE CONNECTION
 mongoose
@@ -20,7 +21,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log(`Connected to database`))
+  .then(() => console.log(`Connected to database :)`))
   .catch((err) => console.error(err));
 
 // EXPRESS SERVER INSTANCE
@@ -61,7 +62,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/auth", authRouter);
 
 app.use("/api/users", usersRouter);
-app.use("/api/projects", projectsRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/brands", brandsRouter);
 
 // ERROR HANDLING
 //  Catch 404 and respond with error message
