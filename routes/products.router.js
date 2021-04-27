@@ -18,6 +18,7 @@ router.post("/create", isLoggedIn, isAdmin, async (req, res, next) => {
       materials,
       picture,
       stock,
+      description,
     } = req.body;
 console.log('materials', materials)
     const newProduct = await Product.create({
@@ -27,6 +28,7 @@ console.log('materials', materials)
       materials,
       picture,
       stock,
+      description,
     });
 
     res
@@ -71,6 +73,7 @@ router.post("/update/:id", isLoggedIn, isAdmin,  async (req, res, next) => {
       price,
       materials,
       picture,
+      description,
     } = req.body;
 
     const product = await Product.findByIdAndUpdate(
@@ -82,6 +85,7 @@ router.post("/update/:id", isLoggedIn, isAdmin,  async (req, res, next) => {
         price,
         materials,
         picture,
+        description,
       },
       { new: true }
     );
