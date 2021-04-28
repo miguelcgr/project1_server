@@ -76,7 +76,7 @@ router.get("/", isLoggedIn, isAdmin, async (req, res, next) => {
 router.get("/:id", isLoggedIn, async (req, res, next) => {
   try {
     const id = req.params.id;
-    const user = await User.findById(id).populate("currentCart.recipeId");
+    const user = await User.findById(id).populate("currentCart.productId");
 
     if (!user) return next(createError(404));
 
@@ -141,12 +141,12 @@ router.get("/delete/:id", isLoggedIn, isAdmin, async (req, res, next) => {
 /// añadir al carro
 router.post("/addToCart", isLoggedIn, async (req, res, next) => {
   try {
-    const { recipeId } = req.body;
+    const { productId } = req.body;
     let user = await User.findById(req.session.currentUser._id);
     let exists = false;
 
     user.currentCart.forEach(async (cartObj, index) => {
-      if (String(cartObj.recipeId) === recipeId && !exists) {
+      if (String(cartObj.productId) === productId && !exists) {
         exists = true;
 
         let newCart = [...user.currentCart];
@@ -154,7 +154,7 @@ router.post("/addToCart", isLoggedIn, async (req, res, next) => {
         
         user = await User.findByIdAndUpdate(req.session.currentUser._id, {currentCart: newCart}, {
           new: true,
-        }).populate("currentCart.recipeId");
+        }).populate("currentCart.productId");
         res.status(200).json(user);
       }
     });
@@ -162,9 +162,9 @@ router.post("/addToCart", isLoggedIn, async (req, res, next) => {
     if (!exists) {
       user = await User.findByIdAndUpdate(
         req.session.currentUser._id,
-        { $push: { currentCart: { recipeId: recipeId, quantity: 1 } } },
+        { $push: { currentCart: { productId: productId, quantity: 1 } } },
         { new: true }
-      ).populate("currentCart.recipeId");
+      ).populate("currentCart.productId");
       res.status(200).json(user);
     }
   } catch (error) {
@@ -176,11 +176,11 @@ router.post("/addToCart", isLoggedIn, async (req, res, next) => {
 router.post("/deleteFromCart", isLoggedIn, async (req, res, next) => {
   try {
     const id = req.session.currentUser._id;
-    const { recipeId } = req.body;
+    const { productId } = req.body;
 
     const user = await User.findByIdAndUpdate(
       id,
-      { $pull: { currentCart: { recipeId } } },
+      { $pull: { currentCart: { productId } } },
       { new: true }
     );
 
