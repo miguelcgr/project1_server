@@ -9,6 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const cors = require("cors");
 require("dotenv").config();
 
+
 const authRouter = require("./routes/auth.router");
 const usersRouter = require("./routes/users.router");
 const productsRouter = require("./routes/products.router");
