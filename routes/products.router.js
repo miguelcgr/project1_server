@@ -13,21 +13,21 @@ router.post("/create", isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     const {
       name,
-      brandId,
       price,
       materials,
       picture,
       stock,
+      category,
       description,
     } = req.body;
 console.log('materials', materials)
     const newProduct = await Product.create({
       name,
-      brandId,
       price,
       materials,
       picture,
       stock,
+      category,
       description,
     });
 
@@ -69,7 +69,6 @@ router.post("/update/:id", isLoggedIn, isAdmin,  async (req, res, next) => {
     const id = req.params.id;
     const {
       name,
-      brandId,
       price,
       materials,
       picture,
@@ -81,10 +80,10 @@ router.post("/update/:id", isLoggedIn, isAdmin,  async (req, res, next) => {
       id,
       {
         name,
-        brandId,
         price,
         materials,
         picture,
+        category,
         description,
       },
       { new: true }
@@ -114,18 +113,18 @@ router.get("/delete/:id", isLoggedIn, isAdmin, async (req, res, next) => {
 
 
 //get products by brandId
-router.get("/brandId/:brandId",  async (req, res, next) => {
-  try {
-    const brandId = req.params.brandId;
-    const product = await Product.find({"brandId": brandId}).populate('materials')
+// router.get("/brandId/:brandId",  async (req, res, next) => {
+//   try {
+//     const brandId = req.params.brandId;
+//     const product = await Product.find({"brandId": brandId}).populate('materials')
 
-    if (!product) return next(createError(404)); 
+//     if (!product) return next(createError(404)); 
 
-    res.status(200).json(product);
-  } catch (error) {
-    next(createError(error)); 
-  }
-});
+//     res.status(200).json(product);
+//   } catch (error) {
+//     next(createError(error)); 
+//   }
+// });
 
 
 module.exports = router;

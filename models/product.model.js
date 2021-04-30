@@ -4,7 +4,6 @@ const ObjectId = Schema.Types.ObjectId;
 
 const productSchema = new Schema({
   name: { type: String, unique: true, required: true },
-  brandId: { type: ObjectId, ref: "Brand" },
   price: { type: Number, required: true },
   materials: [
     {type: String},
@@ -13,9 +12,10 @@ const productSchema = new Schema({
     type: String,
     default: "https://findicons.com/files/icons/2502/food_icons/256/2.png",
   },
-  description: {type: String, default: 'this is the description'},
-  category: {type: String, enum : ['Home', 'Clothes', 'Other'], default: 'Other'},
   stock: Number,
+  category: {type: String },
+  description: {type: String, default: 'this is the description'},
+ 
 });
 
 const Product = mongoose.model("Product", productSchema);

@@ -96,3 +96,10 @@ app.use((req, res, next) => {
 
 
 module.exports = app;
+
+
+/// en el env
+// MONGODB_URI=mongodb+srv://miguel:pottery@cluster0.r25kx.mongodb.net/mystore?retryWrites=true&w=majority
+// SESSION_SECRET=my-store-heroku
+// PUBLIC_DOMAIN=http://localhost:3000
+// PORT=5000
