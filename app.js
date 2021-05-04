@@ -9,6 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const cors = require("cors");
 require("dotenv").config();
 
+
 const authRouter = require("./routes/auth.router");
 const usersRouter = require("./routes/users.router");
 const productsRouter = require("./routes/products.router");
@@ -84,4 +85,21 @@ app.use((err, req, res, next) => {
   }
 });
 
+//build
+app.use((req, res, next) => {
+
+  // If no routes match, send them the React HTML.
+
+  res.sendFile(__dirname + "/public/index.html");
+
+});
+
+
 module.exports = app;
+
+
+/// en el env
+// MONGODB_URI=mongodb+srv://miguel:pottery@cluster0.r25kx.mongodb.net/mystore?retryWrites=true&w=majority
+// SESSION_SECRET=my-store-heroku
+// PUBLIC_DOMAIN=http://localhost:3000
+// PORT=5000
